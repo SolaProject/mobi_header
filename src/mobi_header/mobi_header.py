@@ -123,7 +123,7 @@ class PalmDoc:
         data = data[:size] if length > size else data + bytes(size - length)
         return data
 
-    def update_metadata(self, offset, value):
+    def change_metadata(self, offset, value):
         if not 0 <= offset <= 76:
             raise IndexError("offset must be between 0 and 76, current offset: {0}".format(offset))
         dtype = self.metadata[offset]["dtype"]
@@ -480,24 +480,24 @@ class MobiHeader:
     def update(self):
         # EXTH flag
         if not "EXTH" in self.metadata.keys():
-            self.update_metadata(128, 0)
+            self.change_metadata(128, 0)
         else:
-            self.update_metadata(128, 80)
+            self.change_metadata(128, 80)
         record0 = b"".join([x["data"] for x in self.metadata.values()])
         self.palm_doc.update_record(record0, 0)
         self.palm_doc.update()
 
-    def update_title(self, title):
+    def change_title(self, title):
         id_list = [x["id"] for x in self.exth_value]
         if 503 in id_list:
             self.change_exth_metadata(503, title)
         else:
             self.add_exth_record(503, title, str)
-        self.update_metadata("full_name", title)
+        self.change_metadata("full_name", title)
         self.update_offset_size()
-        self.update_metadata(84, self.metadata["full_name"]["offset"])
-        self.update_metadata(88, self.metadata["full_name"]["bytes"])
-        self.palm_doc.update_metadata(0, title)
+        self.change_metadata(84, self.metadata["full_name"]["offset"])
+        self.change_metadata(88, self.metadata["full_name"]["bytes"])
+        self.palm_doc.change_metadata(0, title)
 
     def update_offset_size(self):
         size_list = [len(x["data"]) for x in self.metadata.values()]
@@ -518,7 +518,7 @@ class MobiHeader:
             data = struct.pack(dtype, value)
         return data
 
-    def update_metadata(self, id, value):
+    def change_metadata(self, id, value):
         dtype = self.metadata[id]["dtype"]
         self.metadata[id]["data"] = self.get_data(value, dtype)
         self.metadata[id]["value"] = value
