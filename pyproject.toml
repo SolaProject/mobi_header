@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mobi_header"
+version = "0.0.1"
+authors = [
+    { name="Sola", email="sola1211582551@outlook.com" },
+]
+description = "A python library for reading/editing mobi/azw3 metadata."
+readme = "README.md"
+requires-python = ">=3.6"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: GPL License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "requests",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/SolaProject/mobi_header"
+"Bug Tracker" = "https://github.com/SolaProject/mobi_header/issues"
