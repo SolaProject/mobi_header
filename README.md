@@ -1,6 +1,8 @@
 # mobi_header
 A python library for reading/editing mobi/azw3 metadata.
 
+**Install:**  `pip install mobi_header`
+
 # class
 
 ## MobiHeader
@@ -14,25 +16,25 @@ A python library for reading/editing mobi/azw3 metadata.
 
 **method:**
 
-* change_title(title : str): 
-    
-    change the title of metadata.
+* change_title(title : str):
+  
+    ​	change the title of metadata.
 
 * change_metadata(id : int, value):
-    
-    change the mobi metadata. the value will be convert to origin dtype.
+  
+    ​	change the mobi metadata. the value will be convert to origin dtype.
 
 * change_exth_metadata(id : int, value):
-    
-    change the mobi exth metadata. the value will be convert to origin dtype.
+  
+    ​	change the mobi exth metadata. the value will be convert to origin dtype.
 
 * get_exth_value_by_id(id : int):
-    
-    return the value of id in exth metadata.
+  
+    ​	return the value of id in exth metadata.
 
 * to_file(file : [str, None] = None):
-    
-    write metadata to file. Default write to origin file.
+  
+    ​	write metadata to file. Default write to origin file.
 
 About metadata and exth-metadata, the detail see [here](https://wiki.mobileread.com/wiki/Mobi#EXTH_Header)
 
@@ -40,7 +42,6 @@ About metadata and exth-metadata, the detail see [here](https://wiki.mobileread.
 
 ```python
 from mobi_header import MobiHeader
-
 foo = MobiHeader("example.azw3")
 foo.change_exth_metadata(501, "PDOC")
 foo.to_file()
