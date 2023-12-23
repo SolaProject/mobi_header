@@ -570,7 +570,7 @@ class MobiHeader:
         for item in self.exth_value:
             if item['id'] == id:
                 return item['value']
-        
+
     def get_exth_value_by_name(self, name):
         for item in self.exth_value:
             if item['name'] == name:
