@@ -362,7 +362,12 @@ class MobiHeader:
         full_name_offset = self.metadata[84]["value"]
         full_name_length = self.metadata[88]["value"]
         full_name_data = header[full_name_offset:full_name_offset+full_name_length]
-        title = full_name_data.decode(encoding=self.text_encoding)
+        try:
+            title = full_name_data.decode(encoding=self.text_encoding)
+        except:
+            # fix padding between EXTH and title
+            full_name_data = header[full_name_offset-4:full_name_offset+full_name_length-4]
+            title = full_name_data.decode(encoding=self.text_encoding)
         self.metadata["full_name"] = self.get_title_metadata(title)
         # padding
         self.metadata["padding"] = self.get_padding_metadata()
@@ -483,6 +488,8 @@ class MobiHeader:
             self.change_metadata(128, 0)
         else:
             self.change_metadata(128, 80)
+        # fix padding between EXTH and title
+        self.change_title(self.metadata["full_name"]["value"])
         record0 = b"".join([x["data"] for x in self.metadata.values()])
         self.palm_doc.update_record(record0, 0)
         self.palm_doc.update()
@@ -565,7 +572,7 @@ class MobiHeader:
             del exth_value[i]
         self.metadata["EXTH"] = self.get_exth_metadata(exth_value)
         self.update_offset_size()
-
+    
     def get_exth_value_by_id(self, id):
         exth_value = self.metadata["EXTH"]["value"]
         id_list = [x["id"] for x in exth_value]
