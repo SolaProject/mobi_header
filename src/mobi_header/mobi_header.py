@@ -574,11 +574,16 @@ class MobiHeader:
         self.update_offset_size()
     
     def get_exth_value_by_id(self, id):
-        exth_value = self.metadata["EXTH"]["value"]
-        id_list = [x["id"] for x in exth_value]
-        i = id_list.index(id)
-        return exth_value[i]["value"]
+        for item in self.exth_value:
+            if item['id'] == id:
+                return item['value']
 
+    def get_exth_value_by_name(self, name):
+        for item in self.exth_value:
+            if item['name'] == name:
+                return item['value'] 
+                
+                
     def to_file(self, file: Optional[str] = None):
         self.update()
         self.palm_doc.to_file(file)
