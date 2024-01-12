@@ -32,7 +32,7 @@ A python library for reading/editing mobi/azw3 metadata.
   
     ​	return the value of id in exth metadata.
   
-  * get_exth_value_by_name(name : str):
+* get_exth_value_by_name(name : str):
   
     ​	return the value of name in exth metadata.
 
